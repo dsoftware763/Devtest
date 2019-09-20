@@ -7,8 +7,8 @@ const Loginstyles = StyleSheet.create({
         alignItems: "center"
     },
     LogoStyles: {
-        height: Platform.OS === 'ios' ? hp('13.5%') : hp('17.5%'),
-        width: wp('42%')
+        height: Platform.OS === 'ios' ? hp('13.8%') : hp('14%'),
+        width: Platform.OS === 'ios' ? wp('42%') : wp('38%')
     },
     AuthenticationContainer: {
         flex: 0.6,
@@ -32,6 +32,7 @@ const Loginstyles = StyleSheet.create({
         textAlign: "left",
         marginLeft: 10,
         marginTop: Platform.OS === 'ios' ? 15 : 5,
+        fontFamily: "gothamrounded-bold"
     },
     SignupContainer: {
         flexDirection: "row",
@@ -42,7 +43,7 @@ const Loginstyles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center",
         width: Platform.OS === 'ios' ? wp('70%') : wp('75%'),
-        height: Platform.OS === 'ios' ? hp('6%') : hp('7.5%'),
+        height: Platform.OS === 'ios' ? hp('6%') : hp('6%'),
         borderWidth: 0,
         backgroundColor: "#31C5C3",
         borderRadius: 30,
@@ -54,15 +55,18 @@ const Loginstyles = StyleSheet.create({
         shadowOffset: { width: 0, height: 0, },
         shadowColor: '#31C5C3',
         shadowOpacity: 0.5,
+        elevation: 2
     },
     LoginTextStyle: {
         fontSize: 14,
         color: "white",
-        fontWeight: "600"
+        fontWeight: "600",
+        fontFamily: "gothamrounded-bold"
     },
     TextColor: {
         color: "#31C5C3",
-        fontWeight: "600"
+        fontWeight: "600",
+        fontFamily: "gothamrounded-bold"
     },
     ForgotContainer: {
         flexDirection: "row",
@@ -70,7 +74,7 @@ const Loginstyles = StyleSheet.create({
     },
     TextBlackColor: {
         color: "#898989",
-        fontWeight: "500"
+        fontFamily: "gothamrounded-bold"
     },
     errorContainer: {
         justifyContent: 'center',

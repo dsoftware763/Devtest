@@ -1,5 +1,4 @@
-import React, { Component } from 'react';
-import { View, Text, StyleSheet, Platform } from 'react-native';
+import { StyleSheet, Platform } from 'react-native';
 import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-native-responsive-screen';
 
 const DashboardStyle = StyleSheet.create({
@@ -18,9 +17,7 @@ const DashboardStyle = StyleSheet.create({
     },
     CenterImageStyle: {
         height: Platform.OS === 'ios' ? hp('4%') : hp('5%'),
-        width: Platform.OS === 'ios' ? wp('11.8%') : wp('12%')
-    },
-    RightImageStyle: {
+        width: Platform.OS === 'ios' ? wp('11.8%') : wp('14%')
     },
     HeaderContainer: {
         backgroundColor: '#FFFFFF',
@@ -30,11 +27,12 @@ const DashboardStyle = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center",
         shadowOffset: { width: 0, height: 0, },
-        shadowColor: '#31C5C3',
-        shadowOpacity: 0.5,
+        shadowColor: 'black',
+        shadowOpacity: 0.2,
+        elevation: Platform.OS == 'ios' ? 0 : 2
     },
     Container: {
-        flex: 1,
+        flexGrow: 0,
         justifyContent: "center",
         alignItems: "center"
     },
@@ -45,7 +43,8 @@ const DashboardStyle = StyleSheet.create({
         justifyContent: "center",
         borderBottomWidth: 1,
         width: "100%",
-        borderBottomColor: "1px solid rgba(0, 0, 0, .2 )",
+        borderBottomColor: "#00000010",
+        borderBottomWidth: 3.5
     },
     CategoriesContainer: {
         flexDirection: "row",
@@ -58,21 +57,20 @@ const DashboardStyle = StyleSheet.create({
         height: 30,
         borderRadius: 100,
         marginTop: 20,
-
     },
     CategoryTextStyle: {
+        textAlign: "center",
         fontSize: 8,
         textTransform: "uppercase",
         color: "#3AD1BF",
-        fontWeight: "500",
-        fontFamily : "gothamrounded-bold"
+        fontFamily: "gothamrounded-bold"
     },
     PortfolioNameContainer: {
         flexDirection: "row",
         justifyContent: "flex-start",
         alignItems: "center",
-        marginLeft: Platform.OS === 'ios' ? 47 : 83,
-        marginTop: Platform.OS === 'ios' ? 25 : 50,
+        marginLeft: Platform.OS === 'ios' ? 40 : 100,
+        marginTop: Platform.OS === 'ios' ? 45 : 50,
         marginBottom: Platform.OS === 'ios' ? 15 : 10,
     },
     DotStyle: {
@@ -86,13 +84,14 @@ const DashboardStyle = StyleSheet.create({
         flex: 1,
         fontSize: 18,
         color: "#898989",
-        fontFamily : "gothamrounded-bold"
+        fontFamily: "gothamrounded-bold"
     },
     PortfolioValueStyle: {
         fontSize: 60,
         fontWeight: "bold",
         color: "#3AD1BF",
-        marginLeft: 10
+        marginLeft: 10,
+        fontFamily: "gothamrounded-bold"
     },
     FiltersContainer: {
         flex: 0.7,
@@ -105,21 +104,22 @@ const DashboardStyle = StyleSheet.create({
         borderWidth: 0,
         borderColor: 0,
         width: wp('83%'),
-        height: 36,
+        height: Platform.OS === 'ios' ? 36 : 45,
         flexDirection: 'row',
         alignItems: 'center',
         marginVertical: 35,
         shadowOffset: { width: 0, height: 0, },
         shadowColor: '#898989',
         shadowOpacity: 0.5,
+        elevation: 2,
         borderRadius: 8,
         borderColor: "1px solid rgba(0, 0, 0, .2 )",
         borderWidth: Platform.OS === 'ios' ? 0 : 1
     },
     inputs: {
-        height: Platform.OS === 'ios' ? 36 : 45,
         marginLeft: 16,
         flex: 1,
+        fontFamily: "gothamrounded-bold"
     },
     inputIcon: {
         width: 18,
@@ -144,7 +144,7 @@ const DashboardStyle = StyleSheet.create({
         fontSize: 10,
         textTransform: "uppercase",
         color: "#3AD1BF",
-        fontWeight: "500"
+        fontFamily: "gothamrounded-bold"
     },
     ValueStyles: {
         flexDirection: "row",
@@ -152,7 +152,8 @@ const DashboardStyle = StyleSheet.create({
         borderBottomColor: "1px solid rgba(0, 0, 0, .2 )",
         borderBottomWidth: 1,
         justifyContent: "center",
-        alignItems: "center"
+        alignItems: "center",
+        fontFamily: "gothamrounded-bold"
     },
     ImageIconContainer: {
         flexDirection: "row"
@@ -164,7 +165,7 @@ const DashboardStyle = StyleSheet.create({
     AlphaImageStyle: {
         height: Platform.OS === 'ios' ? 15 : 18,
         width: 15,
-        marginLeft: 6,
+        marginLeft: 8,
         marginTop: Platform.OS === 'ios' ? 8 : 6
     },
     ValueAmountContainer: {
@@ -175,30 +176,33 @@ const DashboardStyle = StyleSheet.create({
     },
     backgroundImageStyleLarge: {
         height: 40,
-        width: 40
+        width: 40,
+        marginBottom: Platform.OS == 'ios' ? 15 : 0,
     },
     AlphaImageStyleLarge: {
         height: 19,
         width: 17,
-        marginLeft: 10,
+        marginLeft: 12,
         marginTop: 10
     },
     AmountValueTextStyle: {
         textTransform: "uppercase",
         fontSize: 14,
-        color: "#466170"
+        color: "#466170",
+        fontFamily: "gothamrounded-bold"
     },
     SelectedCategories: {
         borderWidth: 0,
         backgroundColor: "#3AD1BF",
         width: Platform.OS === 'ios' ? 65 : 70,
         height: 20,
-        borderRadius: 100
+        borderRadius: 100,
     },
     SelectedTextCategory: {
         color: "white",
         textAlign: "center",
-        marginTop: Platform.OS === 'ios' ? 5 : 3
+        marginTop: Platform.OS === 'ios' ? 6 : 4,
+        fontFamily: "gothamrounded-bold"
     },
     SelectedCategoriesAll: {
         borderWidth: 0,
@@ -206,6 +210,26 @@ const DashboardStyle = StyleSheet.create({
         width: Platform.OS === 'ios' ? 30 : 35,
         height: 20,
         borderRadius: 100
+    },
+    SelectedTextFilters: {
+        color: "white",
+        textAlign: "center",
+        marginTop: Platform.OS === 'ios' ? 5 : 3,
+        fontFamily: "gothamrounded-bold"
+    },
+    SelectedTextCategoryAll: {
+        color: "white",
+        textAlign: "center",
+        marginTop: Platform.OS === 'ios' ? 6 : 4,
+        fontFamily: "gothamrounded-bold"
+    },
+    FetchDataStyle: {
+        width: "100%",
+    },
+    PortfolioValueContainer: {
+        flexDirection: "row",
+        justifyContent: "center",
+        alignItems: "center"
     }
 })
 export default DashboardStyle

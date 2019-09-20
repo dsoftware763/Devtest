@@ -1,7 +1,11 @@
 import React, { Component } from 'react';
-import { View, Text, ScrollView, Image, TextInput, TouchableOpacity,Animated } from 'react-native';
+import { View, Text, Image, TextInput, TouchableOpacity } from 'react-native';
 import Loginstyles from '../styles/LoginStyles'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview'
+
+const { Container, LogoStyles, AuthenticationContainer, logoContainer, TextInputContainer, SignupContainer, LoginContainer,
+    LoginTextStyle, TextColor, ForgotContainer, TextInputStyle, TextBlackColor, error } = Loginstyles
+const logo = require('../../assets/logo/Vector.png')
 
 export default class Login extends Component {
     constructor(props) {
@@ -18,7 +22,7 @@ export default class Login extends Component {
         };
     }
 
-    validateEmail = (text, type, value) => {
+    validateEmail = (text, type) => {
         const reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
         if (type == 'email') {
             if (reg.test(text)) {
@@ -38,8 +42,9 @@ export default class Login extends Component {
         }
     }
 
-    validatePassword = (text, type, value) => {
-        var strongRegex = /^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$/;
+    validatePassword = (text, type) => {
+        // password require capital letter and special symbol and alphanumeric letter
+        var strongRegex = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})");
         if (type == 'password') {
             if (strongRegex.test(text)) {
                 this.setState({
@@ -58,33 +63,15 @@ export default class Login extends Component {
         }
     }
 
-    spinValue = new Animated.Value(0)
-
 
     render() {
-        const { Container,
-            LogoStyles,
-            AuthenticationContainer,
-            logoContainer,
-            TextInputContainer,
-            SignupContainer,
-            LoginContainer,
-            LoginTextStyle,
-            TextColor,
-            ForgotContainer,
-            TextInputStyle,
-            TextBlackColor,
-            errorContainer,
-            error
-        } = Loginstyles
-        const logo = require('../../assets/logo/Vector.png')
         return (
             <KeyboardAwareScrollView contentContainerStyle={Container}>
                 <View style={logoContainer}>
                     <Image source={logo} style={LogoStyles} />
                 </View>
                 <View style={AuthenticationContainer}>
-                    <View style={[TextInputContainer,!this.state.emailvalid ? error : null]}>
+                    <View style={[TextInputContainer, !this.state.emailvalid ? error : null]}>
                         <TextInput
                             style={TextInputStyle}
                             placeholder="Email"
@@ -93,7 +80,7 @@ export default class Login extends Component {
                             onChangeText={(text) => this.validateEmail(text, 'email')}
                         />
                     </View>
-                    <View style={[TextInputContainer,!this.state.passwordvalid ? error : null]}>
+                    <View style={[TextInputContainer, !this.state.passwordvalid ? error : null]}>
                         <TextInput
                             style={TextInputStyle}
                             placeholder="Password"
@@ -115,12 +102,10 @@ export default class Login extends Component {
                     </View>
                     <View style={LoginContainer}>
                         <TouchableOpacity
-                         onPress={() => this.props.navigation.navigate('Loader')}
-                        >
+                            onPress={() => this.props.navigation.navigate('Loader')}>
                             <Text style={LoginTextStyle}>Log In</Text>
                         </TouchableOpacity>
                     </View>
-
                     <View style={SignupContainer}>
                         <Text style={TextBlackColor}>Don't have an account ? </Text>
                         <TouchableOpacity>

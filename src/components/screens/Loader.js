@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import { View, Text, Animated, Easing } from 'react-native';
 import LoaderStyle from '../styles/LoaderStyles'
+
+const loader = require('../../assets/loader.png')
+const { Container, ImageContainer, TextContainer, TextBlackColor } = LoaderStyle
 export default class Loader extends Component {
     constructor(props) {
         super(props);
@@ -13,6 +16,7 @@ export default class Loader extends Component {
             this.props.navigation.navigate('Dashboard');
         }, 3000);
     }
+
     render() {
         Animated.timing(
             this.spinValue,
@@ -22,25 +26,22 @@ export default class Loader extends Component {
                 easing: Easing.linear
             }
         ).start()
-
         const spin = this.spinValue.interpolate({
             inputRange: [0, 1],
             outputRange: ['0deg', '360deg']
         })
-        const loader = require('../../assets/loader.png')
-        const {Container,ImageContainer,TextContainer,TextBlackColor} =LoaderStyle
         return (
             <View style={Container}>
-               <View style = {ImageContainer}>
-               <Animated.Image
-                    style={{ transform: [{ rotate: spin }] }}
-                    source={loader} />
-               </View>
-               <View style = {TextContainer}>
-                   <Text style={TextBlackColor}>
-                       Loading...
+                <View style={ImageContainer}>
+                    <Animated.Image
+                        style={{ transform: [{ rotate: spin }] }}
+                        source={loader} />
+                </View>
+                <View style={TextContainer}>
+                    <Text style={TextBlackColor}>
+                        Loading...
                    </Text>
-               </View>
+                </View>
             </View>
 
         );

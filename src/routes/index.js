@@ -22,7 +22,7 @@ const AppNavigator = createStackNavigator({
         screen: Dashboard
     }
 }, {
-    initialRouteName: 'Dashboard',
+    initialRouteName: 'Login',
 });
 
 export default createAppContainer(AppNavigator);

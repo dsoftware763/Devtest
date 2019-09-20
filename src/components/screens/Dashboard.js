@@ -4,6 +4,20 @@ import { Header, } from 'react-native-elements';
 import DashboardStyle from '../styles/DashboardStyle'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview';
 
+const { Container, PortfolioContainer, CategoriesContainer, FiltersContainer, CategoryTextStyle, PortfolioNameContainer,
+    DotStyle, PortfolioNameStyle, PortfolioValueStyle, inputContainer, inputIcon, inputs, FiltersTextStyle, ValueStyles,
+    FiltersCategoriesContainer, ImageIconContainer, backgroundImageStyleLarge, AlphaImageStyleLarge, backgroundImageStyle,
+    AlphaImageStyle, ValueAmountContainer, AmountValueTextStyle, SelectedCategories, SelectedTextCategory, SelectedCategoriesAll, SelectedTextFilters,
+    SelectedTextCategoryAll, FetchDataStyle, PortfolioValueContainer
+} = DashboardStyle
+const search = require('../../assets/search.png')
+const Cbackground = require('../../assets/background.png')
+const Bbackground = require('../../assets/Bback.png')
+const Abackground = require('../../assets/Aback.png')
+const C = require('../../assets/C.png')
+const B = require('../../assets/B.png')
+const A = require('../../assets/A.png')
+
 export default class Dashboard extends Component {
     static navigationOptions = {
         header: (
@@ -11,12 +25,10 @@ export default class Dashboard extends Component {
                 leftComponent={
                     <View >
                         <TouchableOpacity
-                            style={DashboardStyle.HeaderLeftComponent}
-                        >
+                            style={DashboardStyle.HeaderLeftComponent}>
                             <Image source={require('../../assets/mark.png')} style={DashboardStyle.LeftImageStyle} />
                         </TouchableOpacity>
                     </View>
-
                 }
                 centerComponent={<View>
                     <TouchableOpacity>
@@ -38,25 +50,26 @@ export default class Dashboard extends Component {
         super(props);
         this.state = {
             selected: null,
+            selectedFilters: null,
+            selectedValue: null,
             data: '',
             categoryType: ''
         };
     }
-
-
     componentDidMount() {
         fetch('https://api.myjson.com/bins/100vul')
             .then(response => response.json())
             .then(data => this.setState({ data }));
     }
+
     SelectCategories = (categoryType) => {
         this.setState({ selected: categoryType })
-        console.log(categoryType)
     }
-    SelectFilters = (categoryType) => {
-        this.setState({ selected: categoryType })
-        console.log(categoryType)
+
+    SelectFilters = (FiltersType) => {
+        this.setState({ selectedFilters: FiltersType })
     }
+
     getTypeData = (data) => {
         if (this.state.selected != 'All' && this.state.selected != null) {
             return data[this.state.selected];
@@ -74,22 +87,7 @@ export default class Dashboard extends Component {
     }
 
     render() {
-
-        const { Container, PortfolioContainer, CategoriesContainer, FiltersContainer, CategoryTextStyle, PortfolioNameContainer,
-            DotStyle, PortfolioNameStyle, PortfolioValueStyle, inputContainer, inputIcon, inputs, FiltersTextStyle, ValueStyles,
-            FiltersCategoriesContainer, ImageIconContainer, backgroundImageStyleLarge, AlphaImageStyleLarge, backgroundImageStyle,
-            AlphaImageStyle, ValueAmountContainer, AmountValueTextStyle, SelectedCategories, SelectedTextCategory, SelectedCategoriesAll
-        } = DashboardStyle
-        const search = require('../../assets/search.png')
-        const background = require('../../assets/background.png')
-        const C = require('../../assets/C.png')
-        const B = require('../../assets/B.png')
-        const A = require('../../assets/A.png')
         const data = this.state.data
-        const category = this.state.categoryType
-        console.log(data)
-
-
         return (
             <KeyboardAwareScrollView contentContainerStyle={Container}>
                 <View style={PortfolioContainer}>
@@ -97,9 +95,9 @@ export default class Dashboard extends Component {
                         <View style={DotStyle}></View>
                         <Text style={PortfolioNameStyle}>Your Portfolio</Text>
                     </View>
-                    <View style={{ flexDirection: "row", justifyContent: "center", alignItems: "center", }}>
-                        <ImageBackground source={background} style={backgroundImageStyleLarge} >
-                            <Image source={C} style={AlphaImageStyleLarge} /></ImageBackground>
+                    <View style={PortfolioValueContainer}>
+                        <ImageBackground source={(this.state.selected == "category_A") ? Abackground : (this.state.selected == "category_B") ? Bbackground : (this.state.selected == "category_C") ? Cbackground : Abackground} style={backgroundImageStyleLarge} >
+                            <Image source={(this.state.selected == "category_A") ? A : (this.state.selected == "category_B") ? B : (this.state.selected == "category_C") ? C : A} style={AlphaImageStyleLarge} /></ImageBackground>
                         <Text style={PortfolioValueStyle}>{'3,700.25'}</Text>
                     </View>
                     <View style={[CategoriesContainer,]}>
@@ -121,15 +119,13 @@ export default class Dashboard extends Component {
                         <TouchableOpacity onPress={() => this.SelectCategories('All')}
                             style={(this.state.selected === 'All') ? SelectedCategoriesAll : {}}
                         >
-                            <Text style={[CategoryTextStyle, (this.state.selected === 'All') ? SelectedTextCategory : {}]}>{'All'}</Text>
+                            <Text style={[CategoryTextStyle, (this.state.selected === 'All') ? SelectedTextCategoryAll : {}]}>{'All'}</Text>
                         </TouchableOpacity>
                     </View>
                 </View>
 
-
                 <View style={FiltersContainer}>
                     <View style={inputContainer}>
-
                         <TextInput style={inputs}
                             placeholder="Search Value"
                             placeholderTextColor="#B3B3B3"
@@ -141,39 +137,37 @@ export default class Dashboard extends Component {
                     </View>
                     <View style={FiltersCategoriesContainer}>
                         <TouchableOpacity onPress={() => this.SelectFilters('AllFilter')}
-                            style={(this.state.selected === 'AllFilter') ? SelectedCategoriesAll : {}}
+                            style={(this.state.selectedFilters === 'AllFilter') ? SelectedCategoriesAll : {}}
                         >
-                            <Text style={[FiltersTextStyle, (this.state.selected === 'AllFilter') ? SelectedTextCategory : {}]}>{'All'}</Text>
+                            <Text style={[FiltersTextStyle, (this.state.selectedFilters === 'AllFilter') ? SelectedTextFilters : {}]}>{'All'}</Text>
                         </TouchableOpacity>
                         <TouchableOpacity onPress={() => this.SelectFilters('Filter1')}
-                            style={(this.state.selected === 'Filter1') ? SelectedCategories : {}}
+                            style={(this.state.selectedFilters === 'Filter1') ? SelectedCategories : {}}
                         >
-                            <Text style={[FiltersTextStyle, (this.state.selected === 'Filter1') ? SelectedTextCategory : {}]}>{'Filter 1'}</Text>
+                            <Text style={[FiltersTextStyle, (this.state.selectedFilters === 'Filter1') ? SelectedTextFilters : {}]}>{'Filter 1'}</Text>
                         </TouchableOpacity>
                         <TouchableOpacity onPress={() => this.SelectFilters('Filter2')}
-                            style={(this.state.selected === 'Filter2') ? SelectedCategories : {}}
+                            style={(this.state.selectedFilters === 'Filter2') ? SelectedCategories : {}}
                         >
-                            <Text style={[FiltersTextStyle, (this.state.selected === 'Filter2') ? SelectedTextCategory : {}]}>{'Filter 2'}</Text>
+                            <Text style={[FiltersTextStyle, (this.state.selectedFilters === 'Filter2') ? SelectedTextFilters : {}]}>{'Filter 2'}</Text>
                         </TouchableOpacity>
                         <TouchableOpacity onPress={() => this.SelectFilters('Filter3')}
-                            style={(this.state.selected === 'Filter3') ? SelectedCategories : {}}
+                            style={(this.state.selectedFilters === 'Filter3') ? SelectedCategories : {}}
                         >
-                            <Text style={[FiltersTextStyle, (this.state.selected === 'Filter3') ? SelectedTextCategory : {}]}>{'Filter 3'}</Text>
+                            <Text style={[FiltersTextStyle, (this.state.selectedFilters === 'Filter3') ? SelectedTextFilters : {}]}>{'Filter 3'}</Text>
                         </TouchableOpacity>
                     </View>
-                    <View style={{ width: "100%",paddingBottom : 160 }}>
+                    <View style={FetchDataStyle}>
 
                         <FlatList
                             data={this.getTypeData(data)}
-                        
+
                             renderItem={({ item }) =>
-                                <TouchableOpacity onPress={() => this.SelectCategories('ValueSelected')}
-                                    style={(this.state.selected === 'ValueSelected') ? { backgroundColor: "#3AD1BF" } : {}}
-                                >
+                                <TouchableOpacity>
                                     <View style={ValueStyles}>
                                         <View style={ImageIconContainer}>
-                                            <ImageBackground source={background} style={[backgroundImageStyle]} >
-                                                <Image source= {(item.category == 'A') ? A :(item.category == 'B') ? B: C} style={AlphaImageStyle} /></ImageBackground>
+                                            <ImageBackground source={(item.category == 'A') ? Abackground : (item.category == 'B') ? Bbackground : Cbackground} style={[backgroundImageStyle]} >
+                                                <Image source={(item.category == 'A') ? A : (item.category == 'B') ? B : C} style={AlphaImageStyle} /></ImageBackground>
                                         </View>
                                         <View style={ValueAmountContainer}>
                                             <Text style={AmountValueTextStyle}>{item.status}</Text>
